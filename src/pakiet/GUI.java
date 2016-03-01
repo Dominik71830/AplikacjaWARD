@@ -350,6 +350,8 @@ public class GUI extends javax.swing.JFrame {
                throw new SQLException();
            }
            //Date czas = new Date(System.currentTimeMillis());
+           //Enkrytpowanie hasła
+           haslo1 = f.encrypt(haslo1);
            //tworzenie nowego usera
            User user = new User(login, haslo1, imie, nazwisko, email);//,czas);
            //System.out.print(czas);
