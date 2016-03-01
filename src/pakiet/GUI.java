@@ -6,6 +6,12 @@
 package pakiet;
 
 //import pakiet.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -15,14 +21,14 @@ import javax.swing.JOptionPane;
  * @author Dominik
  */
 public class GUI extends javax.swing.JFrame {
-    
+     Functions f; //obiekt f będzie dostarczał wszystkich niezbędnych funkcji
     
     /**
      * Creates new form GUI
      */
-    public GUI() {
+    public GUI() throws IOException, FileNotFoundException, SQLException {
         initComponents();
-        
+        f= new Functions();
         jPanelZaloguj.setVisible(false);
         jPanelZarejestruj.setVisible(false);
     }
@@ -43,11 +49,20 @@ public class GUI extends javax.swing.JFrame {
         jLabelNazwisko = new javax.swing.JLabel();
         jTextFieldImie = new javax.swing.JTextField();
         jTextFieldNazwisko = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTextFieldEmail = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldLoginRej = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jTextFieldHasloZar2 = new javax.swing.JTextField();
+        jTextFieldHasloZar = new javax.swing.JTextField();
+        jButtonZarOk = new javax.swing.JButton();
         jPanelZaloguj = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldLogin = new javax.swing.JTextField();
+        jTextFieldLoginZal = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldHaslo = new javax.swing.JTextField();
+        jTextFieldHasloZal = new javax.swing.JTextField();
         jToggleButtonLogujOk = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -74,6 +89,27 @@ public class GUI extends javax.swing.JFrame {
 
         jLabelNazwisko.setText("Nazwisko:");
 
+        jTextFieldNazwisko.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNazwiskoActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Adres E-mail:");
+
+        jLabel5.setText("Login:");
+
+        jLabel6.setText("Hasło:");
+
+        jLabel7.setText("Powtórz hasło:");
+
+        jButtonZarOk.setText("Ok");
+        jButtonZarOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonZarOkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelZarejestrujLayout = new javax.swing.GroupLayout(jPanelZarejestruj);
         jPanelZarejestruj.setLayout(jPanelZarejestrujLayout);
         jPanelZarejestrujLayout.setHorizontalGroup(
@@ -81,13 +117,33 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(jPanelZarejestrujLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelImie)
-                    .addComponent(jLabelNazwisko))
-                .addGap(31, 31, 31)
-                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldImie)
-                    .addComponent(jTextFieldNazwisko, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
-                .addContainerGap(208, Short.MAX_VALUE))
+                    .addGroup(jPanelZarejestrujLayout.createSequentialGroup()
+                        .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanelZarejestrujLayout.createSequentialGroup()
+                                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6))
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldHasloZar, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldHasloZar2))))
+                        .addContainerGap(175, Short.MAX_VALUE))
+                    .addGroup(jPanelZarejestrujLayout.createSequentialGroup()
+                        .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelZarejestrujLayout.createSequentialGroup()
+                                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelImie)
+                                    .addComponent(jLabelNazwisko))
+                                .addGap(65, 65, 65)
+                                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextFieldNazwisko)
+                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldLoginRej)
+                                    .addComponent(jTextFieldImie)))
+                            .addComponent(jButtonZarOk))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanelZarejestrujLayout.setVerticalGroup(
             jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +156,25 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNazwisko)
                     .addComponent(jTextFieldNazwisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldLoginRej, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextFieldHasloZar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelZarejestrujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTextFieldHasloZar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonZarOk)
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         //jPanelZaloguj.setEnabled(false);
@@ -129,8 +203,8 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(32, 32, 32)
                         .addGroup(jPanelZalogujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldHaslo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldHasloZal, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldLoginZal, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jToggleButtonLogujOk))
                 .addContainerGap(199, Short.MAX_VALUE))
         );
@@ -140,11 +214,11 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelZalogujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldLoginZal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelZalogujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldHaslo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldHasloZal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToggleButtonLogujOk)
                 .addContainerGap(217, Short.MAX_VALUE))
@@ -219,14 +293,14 @@ public class GUI extends javax.swing.JFrame {
     private void jToggleButtonLogujOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonLogujOkActionPerformed
         
         
-        Functions f = new Functions(); //obiekt f będzie dostarczał wszystkich niezbędnych funkcji
+        
         try {
             //Odczytanie danych z formularza
-            String login = jTextFieldLogin.getText();
-            String password = jTextFieldHaslo.getText();
+            String login = jTextFieldLoginZal.getText();
+            String password = jTextFieldHasloZal.getText();
             String encryptedPassword = f.encrypt(password);
             
-            if(login.equals("")) throw new Exception();
+            if(login.equals("")) throw new Exception();//jeśli nie podano loginu to koniec logowania
             
             //System.out.println(encryptedPassword);
         
@@ -234,7 +308,7 @@ public class GUI extends javax.swing.JFrame {
             else System.out.println("Nie Równe");//test compare()*/
             
             //nawiązanie połączenia
-            f.getConnection();
+            
             //sprawdzenie czy użytkownik istnieje
             User user = f.getUser(login);
             String usersPassword = user.getPassword();
@@ -246,10 +320,58 @@ public class GUI extends javax.swing.JFrame {
             }
             
         } catch (Exception ex) {
-            //Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Nie ma takiego użytkownika");
         }
     }//GEN-LAST:event_jToggleButtonLogujOkActionPerformed
+
+    private void jTextFieldNazwiskoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNazwiskoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNazwiskoActionPerformed
+
+    private void jButtonZarOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonZarOkActionPerformed
+        //Rejestracja nowego użytkownika
+        
+        //Zebranie danych
+        String login = jTextFieldLoginRej.getText();
+        try {
+            if(f.userExist(login)){
+                throw new SQLException();
+            }
+            
+            String imie = jTextFieldImie.getText();
+            String nazwisko = jTextFieldNazwisko.getText();
+            String email = jTextFieldEmail.getText();
+            
+           //Porównianie haseł
+           String haslo1 = jTextFieldHasloZar.getText();
+           String haslo2 = jTextFieldHasloZar2.getText(); 
+           if(!haslo1.equals(haslo2)){
+               throw new SQLException();
+           }
+           //Date czas = new Date(System.currentTimeMillis());
+           //tworzenie nowego usera
+           User user = new User(login, haslo1, imie, nazwisko, email);//,czas);
+           //System.out.print(czas);
+           // i dodwanie go do bazy
+           f.addUser(user);
+           
+           
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Użytkownik o podanym loginie już istnieje lub hasła są różne");
+        }
+       
+     
+        
+        
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Podane hasła są różne");
+        }
+        
+        
+    }//GEN-LAST:event_jButtonZarOkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,7 +403,13 @@ public class GUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI().setVisible(true);
+                try {
+                    new GUI().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });
@@ -290,9 +418,14 @@ public class GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonZarOk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelImie;
     private javax.swing.JLabel jLabelNazwisko;
     private javax.swing.JMenu jMenu1;
@@ -303,9 +436,13 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelZaloguj;
     private javax.swing.JPanel jPanelZarejestruj;
-    private javax.swing.JTextField jTextFieldHaslo;
+    private javax.swing.JTextField jTextFieldEmail;
+    private javax.swing.JTextField jTextFieldHasloZal;
+    private javax.swing.JTextField jTextFieldHasloZar;
+    private javax.swing.JTextField jTextFieldHasloZar2;
     private javax.swing.JTextField jTextFieldImie;
-    private javax.swing.JTextField jTextFieldLogin;
+    private javax.swing.JTextField jTextFieldLoginRej;
+    private javax.swing.JTextField jTextFieldLoginZal;
     private javax.swing.JTextField jTextFieldNazwisko;
     private javax.swing.JToggleButton jToggleButtonLogujOk;
     // End of variables declaration//GEN-END:variables
