@@ -217,23 +217,37 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemWylogujActionPerformed
 
     private void jToggleButtonLogujOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonLogujOkActionPerformed
-        //tu się będzie logowało
         
-        Hasz hasz = new Hasz();
+        
+        Functions f = new Functions(); //obiekt f będzie dostarczał wszystkich niezbędnych funkcji
         try {
+            //Odczytanie danych z formularza
             String login = jTextFieldLogin.getText();
             String password = jTextFieldHaslo.getText();
-            String encryptedPassword = hasz.encrypt(password);
-            //tu sie powinno ściągnąć dane z bazy i sprawdzić czy są te same
-            System.out.println(encryptedPassword);
+            String encryptedPassword = f.encrypt(password);
+            
+            if(login.equals("")) throw new Exception();
+            
+            //System.out.println(encryptedPassword);
         
-            if(hasz.compare("ddjd", "ddd")==true) System.out.println("Równe");
-            else System.out.println("Nie Równe");
-        
-        
+            /*if(hasz.compare("ddjd", "ddd")==true) System.out.println("Równe");
+            else System.out.println("Nie Równe");//test compare()*/
+            
+            //nawiązanie połączenia
+            f.getConnection();
+            //sprawdzenie czy użytkownik istnieje
+            User user = f.getUser(login);
+            String usersPassword = user.getPassword();
+            if(f.compare(encryptedPassword, usersPassword)){
+                JOptionPane.showMessageDialog(null, "Zalogowano na konto użytkownika " + user.getLogin());
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Złe hasło");
+            }
+            
         } catch (Exception ex) {
-            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Błąd logowania");
+            //Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Nie ma takiego użytkownika");
         }
     }//GEN-LAST:event_jToggleButtonLogujOkActionPerformed
 
