@@ -37,5 +37,7 @@ private static Key generateKey() throws Exception {
     Key key = new SecretKeySpec(keyValue, ALGORITHM);
     return key;
 }
-
+public boolean compare(String s1, String s2){
+    return(s1.equals(s2) ? true : false);
+}
 }
