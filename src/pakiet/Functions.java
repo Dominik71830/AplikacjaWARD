@@ -1,6 +1,7 @@
 
 package pakiet;
 
+import java.awt.Point;
 import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,6 +21,7 @@ import static javafx.scene.input.KeyCode.P;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -190,4 +192,49 @@ public boolean userExist(String _login) throws SQLException{
     }
     return value;
 }
+
+public void cleanJTextFieldsInZal(JTextField t1,JTextField t2){
+    
+    List<JTextField> lista = new ArrayList<JTextField>();
+        lista.add(t1);
+        lista.add(t2);
+        
+    for (JTextField t : lista){
+            t.setText("");
+        }
+}
+
+public void cleanJTextFieldsInZar(JTextField t1,JTextField t2,JTextField t3,JTextField t4,JTextField t5,JTextField t6){
+    List<JTextField> lista = new ArrayList<JTextField>();
+        lista.add(t1);
+        lista.add(t2);
+        lista.add(t3);
+        lista.add(t4);
+        lista.add(t5);
+        lista.add(t6);
+        
+    for (JTextField t : lista){
+            t.setText("");
+        }
+}
+
+public double compare2Points (Point p1, Point p2){
+return (
+        Math.sqrt(
+        (p1.getX() - p2.getX()) 
+        * 
+        (p1.getX() - p2.getX())
+        + 
+        (p1.getY() - p2.getY())
+        *
+        (p1.getY() - p2.getY())
+        )
+        );
+    
+}
+
+
+
+
+
 }

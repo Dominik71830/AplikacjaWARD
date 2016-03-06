@@ -12,9 +12,14 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -31,6 +36,7 @@ public class GUI extends javax.swing.JFrame {
         f= new Functions();
         jPanelZaloguj.setVisible(false);
         jPanelZarejestruj.setVisible(false);
+        jPanelGlowny.setVisible(false);
     }
 
     /**
@@ -64,10 +70,12 @@ public class GUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldHasloZal = new javax.swing.JTextField();
         jToggleButtonLogujOk = new javax.swing.JToggleButton();
+        jPanelGlowny = new javax.swing.JPanel();
+        jLabelZalogowano = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu = new javax.swing.JMenu();
+        jMenuItemZal = new javax.swing.JMenuItem();
+        jMenuItemZar = new javax.swing.JMenuItem();
         jMenuItemWyloguj = new javax.swing.JMenuItem();
 
         jLabel1.setText("jLabel1");
@@ -84,6 +92,8 @@ public class GUI extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        //jPanelZarejestruj.setVisible(false);
 
         jLabelImie.setText("Imię:");
 
@@ -177,7 +187,7 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap(113, Short.MAX_VALUE))
         );
 
-        //jPanelZaloguj.setEnabled(false);
+        //jPanelZaloguj.setVisible(false);
 
         jLabel2.setText("Login:");
 
@@ -224,25 +234,44 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap(217, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Użytkownik");
+        //jPanelGlowny.setVisible(false);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem1.setText("Zaloguj");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanelGlownyLayout = new javax.swing.GroupLayout(jPanelGlowny);
+        jPanelGlowny.setLayout(jPanelGlownyLayout);
+        jPanelGlownyLayout.setHorizontalGroup(
+            jPanelGlownyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGlownyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelZalogowano, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelGlownyLayout.setVerticalGroup(
+            jPanelGlownyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelGlownyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelZalogowano, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(276, Short.MAX_VALUE))
+        );
+
+        jMenu.setText("Użytkownik");
+
+        jMenuItemZal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_MASK));
+        jMenuItemZal.setText("Zaloguj");
+        jMenuItemZal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemZalActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu.add(jMenuItemZal);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem2.setText("Zarejestruj");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemZar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
+        jMenuItemZar.setText("Zarejestruj");
+        jMenuItemZar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuItemZarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu.add(jMenuItemZar);
 
         jMenuItemWyloguj.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItemWyloguj.setText("Wyloguj");
@@ -251,9 +280,9 @@ public class GUI extends javax.swing.JFrame {
                 jMenuItemWylogujActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemWyloguj);
+        jMenu.add(jMenuItemWyloguj);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -264,30 +293,38 @@ public class GUI extends javax.swing.JFrame {
             .addComponent(jPanelZaloguj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanelZarejestruj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanelGlowny, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelZaloguj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanelZarejestruj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanelGlowny, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenuItemZarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZarActionPerformed
         jPanelZaloguj.setVisible(false);
+        //jPanelZarejestruj = new JPanel();//to nie zadziała
+        f.cleanJTextFieldsInZar(jTextFieldEmail,jTextFieldHasloZar,jTextFieldHasloZar2,jTextFieldImie,jTextFieldLoginRej, jTextFieldNazwisko);
         jPanelZarejestruj.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItemZarActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemZalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZalActionPerformed
+        f.cleanJTextFieldsInZal(jTextFieldLoginZal,jTextFieldHasloZal);
         jPanelZaloguj.setVisible(true);
         jPanelZarejestruj.setVisible(false);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemZalActionPerformed
 
     private void jMenuItemWylogujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemWylogujActionPerformed
         jPanelZaloguj.setVisible(false);
         jPanelZarejestruj.setVisible(false);
+        jPanelGlowny.setVisible(false);
     }//GEN-LAST:event_jMenuItemWylogujActionPerformed
 
     private void jToggleButtonLogujOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonLogujOkActionPerformed
@@ -307,13 +344,16 @@ public class GUI extends javax.swing.JFrame {
             /*if(hasz.compare("ddjd", "ddd")==true) System.out.println("Równe");
             else System.out.println("Nie Równe");//test compare()*/
             
-            //nawiązanie połączenia
+            
             
             //sprawdzenie czy użytkownik istnieje
             User user = f.getUser(login);
             String usersPassword = user.getPassword();
             if(f.compare(encryptedPassword, usersPassword)){
-                JOptionPane.showMessageDialog(null, "Zalogowano na konto użytkownika " + user.getLogin());
+                //JOptionPane.showMessageDialog(null, "Zalogowano na konto użytkownika " + user.getLogin());
+                jPanelZaloguj.setVisible(false);
+                jPanelGlowny.setVisible(true);
+                jLabelZalogowano.setText("Zalogowano na konto użytkownika " + user.getLogin());
             }
             else{
                 JOptionPane.showMessageDialog(null, "Złe hasło");
@@ -430,12 +470,14 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelImie;
     private javax.swing.JLabel jLabelNazwisko;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JLabel jLabelZalogowano;
+    private javax.swing.JMenu jMenu;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemWyloguj;
+    private javax.swing.JMenuItem jMenuItemZal;
+    private javax.swing.JMenuItem jMenuItemZar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelGlowny;
     private javax.swing.JPanel jPanelZaloguj;
     private javax.swing.JPanel jPanelZarejestruj;
     private javax.swing.JTextField jTextFieldEmail;
