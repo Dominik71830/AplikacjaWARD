@@ -6,6 +6,7 @@ import java.util.List;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import static java.lang.Character.isLetter;
 import java.security.Key;
 import java.sql.Connection;
 import java.sql.Date;
@@ -218,7 +219,7 @@ public void cleanJTextFieldsInZar(JTextField t1,JTextField t2,JTextField t3,JTex
         }
 }
 
-public double compare2Points (Point p1, Point p2){
+public double distancebetween2Points (Point p1, Point p2){
 return (
         Math.sqrt(
         (p1.getX() - p2.getX()) 
@@ -232,6 +233,19 @@ return (
         );
     
 }
+
+    public boolean checkEmail(String email) {
+        int x=0;
+        
+        for(char c : email.toCharArray()){
+            if(c == '@') x++; //tu będzie 1
+            if(x == 1 && c == '.') x++; //tu będzie 2
+            if(isLetter(c) && x == 2) x++; //tu będzie 3
+        }
+        
+        if(x==3) return true;
+        else     return false;
+    }
 
 
 

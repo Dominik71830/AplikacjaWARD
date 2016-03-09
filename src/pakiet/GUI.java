@@ -27,7 +27,7 @@ import javax.swing.JTextField;
  */
 public class GUI extends javax.swing.JFrame {
      Functions f; //obiekt f będzie dostarczał wszystkich niezbędnych funkcji
-    
+     User main_user;
     /**
      * Creates new form GUI
      */
@@ -354,6 +354,7 @@ public class GUI extends javax.swing.JFrame {
                 jPanelZaloguj.setVisible(false);
                 jPanelGlowny.setVisible(true);
                 jLabelZalogowano.setText("Zalogowano na konto użytkownika " + user.getLogin());
+                main_user = user;
             }
             else{
                 JOptionPane.showMessageDialog(null, "Złe hasło");
@@ -382,6 +383,10 @@ public class GUI extends javax.swing.JFrame {
             String imie = jTextFieldImie.getText();
             String nazwisko = jTextFieldNazwisko.getText();
             String email = jTextFieldEmail.getText();
+            //Sprawdzenie email'a
+            if(!f.checkEmail(email)){
+                throw new SQLException();
+            }
             
            //Porównianie haseł
            String haslo1 = jTextFieldHasloZar.getText();
@@ -402,7 +407,7 @@ public class GUI extends javax.swing.JFrame {
         
         } catch (SQLException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Użytkownik o podanym loginie już istnieje lub hasła są różne");
+            JOptionPane.showMessageDialog(null, "Użytkownik o podanym loginie już istnieje lub hasła są różne lub podane dane są nieprawidłowe");
         }
        
      

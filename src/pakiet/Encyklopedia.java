@@ -142,15 +142,15 @@ public class Encyklopedia extends javax.swing.JFrame {
             
         Point punktnosek = new Point(52,65);
         Point punktleweoczko = new Point(39,52);
-        if (f.compare2Points(punkt, punktnosek)<= 5)
+        if (f.distancebetween2Points(punkt, punktnosek)<= 5)
         {
             jLabel3.setText("Kliknąłeś w nosek");
         }
-        else if(f.compare2Points(punkt, punktleweoczko)<= 4){
+        else if(f.distancebetween2Points(punkt, punktleweoczko)<= 4){
             jLabel3.setText("Kliknąłeś w lewe oczko");
         }
        
-        //jLabel3.setText(Double.toString(f.compare2Points(punkt, punkt2)));
+        //jLabel3.setText(Double.toString(f.distancebetween2Points(punkt, punkt2)));
         
         }
         
